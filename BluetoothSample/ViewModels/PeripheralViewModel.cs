@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BluetoothSample.ViewModels
@@ -15,7 +16,15 @@ namespace BluetoothSample.ViewModels
     {
         public PeripheralViewModel(IPeripheral peripheral)
         {
+            Console.WriteLine("[lester-debug] PeripheralViewModel");
             this.Title = peripheral.Name;
+            while(!peripheral.IsConnected())
+            {
+                peripheral.Connect();
+                Task.Delay(100).Wait();
+            }
+
+            
 
             this.Load = this.LoadingCommand(async () =>
             {
