@@ -13,7 +13,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:ServiceViewModel">
                     <StackLayout>
-                        <Label Text="{Binding Title}" />
+                        <BoxView HeightRequest="1" BackgroundColor="Gray"/>
+                        <Label Text="{Binding Title}" FontSize="Title" />
+                        <BoxView HeightRequest="1" BackgroundColor="Gray"/>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

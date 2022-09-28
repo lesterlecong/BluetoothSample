@@ -2,15 +2,34 @@
 <infrastructure:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:infrastructure="clr-namespace:BluetoothSample.Infrastructure"
-             x:Class="BluetoothSample.Views.ServicePage">
+             xmlns:viewmodels="clr-namespace:BluetoothSample.ViewModels"
+             x:DataType="viewmodels:ServiceViewModel"
+             x:Class="BluetoothSample.Views.ServicePage"
+             Title="Service">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
-            
+
+            <Label Text="{Binding Title, StringFormat='Service UUID: {0}'}"
+                   Grid.Row="0" />
+
+            <CollectionView ItemsSource="{Binding Characteristics}"
+                            SelectedItem="{Binding SelectedCharacteristic}"
+                            SelectionMode="Single"
+                            Grid.Row="1">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:CharacteristicViewModel">
+                        <StackLayout>
+                            <BoxView HeightRequest="1" BackgroundColor="Gray"/>
+                            <Label Text="{Binding UUID}" FontSize="Caption"/>
+                            <BoxView HeightRequest="1" BackgroundColor="Gray"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
     </ContentPage.Content>
 </infrastructure:BaseContentPage>

@@ -18,7 +18,5 @@ namespace BluetoothSample.Views
         {
             InitializeComponent();
         }
-
-        public PeripheralViewModel BindingContext { get; internal set; }
     }
 }
