@@ -62,6 +62,7 @@ namespace BluetoothSample.ViewModels
         }
         void SetRead(byte[] data)
         {
+            Console.WriteLine("[lester-debug] data: {0}", data);
             this.ReadValue = Encoding.UTF8.GetString(data);
             this.LastValueTime = DateTime.Now.ToString();
         }
