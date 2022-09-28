@@ -18,7 +18,7 @@ namespace BluetoothSample.ViewModels
     {
         readonly IBleManager? bleManager;
         IDisposable? scanSub;
-
+        
         public ScanViewModel()
         {
             bleManager = ShinyHost.Resolve<IBleManager>();
@@ -32,9 +32,13 @@ namespace BluetoothSample.ViewModels
                 {
                     this.SelectedPeripheral = null;
                     this.StopScan();
-                    await this.Navigation.PushAsync(new PeripheralPage
+                    /*await this.Navigation.PushAsync(new PeripheralPage
                     {
                         BindingContext = new PeripheralViewModel(x.Peripheral)
+                    });*/
+                    await this.Navigation.PushAsync(new BleInteractionPage
+                    {
+                        BindingContext = new BleInteractionViewModel(x.Peripheral)
                     });
                 });
 
@@ -138,6 +142,15 @@ namespace BluetoothSample.ViewModels
                                         foreach (var item in list)
                                             this.Peripherals.Add(item);
                                     }
+                                    else
+                                    {
+                                        ScanCount++;
+                                        if(ScanCount > 5)
+                                        {
+                                            ScanCount = 0;
+                                            StopScan();
+                                        }
+                                    }
                                 },
                                 ex => this.Alert(ex.ToString(), "ERROR")
                             );
@@ -157,6 +170,7 @@ namespace BluetoothSample.ViewModels
 
         PeripheralItemViewModel? selected;
 
+        public int ScanCount { get; set; }
         public PeripheralItemViewModel? SelectedPeripheral
         {
             get => this.selected;
