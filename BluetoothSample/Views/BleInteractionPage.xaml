@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:BluetoothSample.ViewModels"
+             xmlns:behaviors="clr-namespace:BluetoothSample.Behaviors"
+             x:DataType="viewmodels:BleInteractionViewModel"
+             x:Class="BluetoothSample.Views.BleInteractionPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Switch x:Name="bleSwitch" Grid.Row="0" Grid.Column="2" 
+                        Grid.ColumnSpan="1">
+                    <Switch.Behaviors>
+                        <behaviors:SwitchBehavior Command="{Binding ConnectionToggle}"/>
+                    </Switch.Behaviors>
+                    <Switch.Triggers>
+                        <DataTrigger TargetType="Switch" Binding="{Binding IsConnected}" Value="True">
+                            <Setter Property="IsToggled" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Switch" Binding="{Binding IsConnected}" Value="False">
+                            <Setter Property="IsToggled" Value="False"/>
+                        </DataTrigger>
+                    </Switch.Triggers>
+                </Switch>
+            
+
+                <Editor IsEnabled="{Binding IsConnected}" Placeholder="Please enter a command" 
+                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                        Text="{Binding MessageValue, Mode=TwoWay}"/>
+                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="#555555" Text="{Binding DeviceFeedback}"/>
+                <Button Text="Send" FontSize="Title" 
+                        Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1"
+                        Command="{Binding SendCommand}"
+                        IsEnabled="{Binding IsConnected}">
+                    
+                </Button>
+            </Grid>
+            
+            
+            
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
